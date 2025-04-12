@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_circle/providers/product_provider.dart';
+
+class CategorySelector extends StatelessWidget {
+  const CategorySelector({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final productProvider = Provider.of<ProductProvider>(context);
+    final displayedCategories = productProvider.displayedCategories;
+    final selectedCategoryId = productProvider.selectedCategoryId;
+    final showAllCategories = productProvider.showAllCategories;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 30, bottom: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Category",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              GestureDetector(
+                onTap: () {
+                  productProvider.toggleShowAllCategories();
+                },
+                child: Text(
+                  showAllCategories ? "See Less" : "See All",
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF70B9BE),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          margin: const EdgeInsets.only(bottom: 5),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: displayedCategories.length,
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            itemBuilder: (context, index) {
+              final category = displayedCategories[index];
+              final isSelected = category.id == selectedCategoryId;
+
+              return Padding(
+                padding: EdgeInsets.only(
+                  left: index == 0 ? 10 : 5,
+                  right: index == displayedCategories.length - 1 ? 10 : 5,
+                ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    productProvider.selectCategory(category.id);
+
+                    if (!productProvider.showAllCategories &&
+                        index >= 3 &&
+                        productProvider.categories.length > 3) {
+                      productProvider.toggleShowAllCategories();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        isSelected ? const Color(0xFF70B9BE) : Colors.white,
+                    foregroundColor: isSelected ? Colors.white : Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: BorderSide(
+                        color:
+                            isSelected
+                                ? Colors.transparent
+                                : Colors.grey.shade300,
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                  ),
+                  child: Text(category.name),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
