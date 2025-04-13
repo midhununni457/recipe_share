@@ -4,7 +4,7 @@ import 'package:recipe_circle/providers/product_provider.dart';
 import 'package:recipe_circle/widgets/cards/featured_card.dart';
 import 'package:recipe_circle/widgets/cards/popular_card.dart';
 import 'package:recipe_circle/widgets/categories/category_selector.dart';
-import 'package:recipe_circle/widgets/lists/products_horizontal_list.dart';
+import 'package:recipe_circle/widgets/lists/products_directional_list.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,10 +12,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
-
-    final filteredProducts = productProvider.getProductsByCategory(
-      productProvider.selectedCategoryId,
-    );
+    final filteredProducts = productProvider.getHomeProducts();
+    final featuredProducts = productProvider.products.take(6).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -74,17 +72,21 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProductsHorizontalList(
+              ProductsDirectionalList(
                 sectionTitle: "Featured",
                 height: 172,
+                products: featuredProducts,
                 itemBuilder: (product, index) => FeaturedCard(product: product),
               ),
               const SizedBox(height: 25),
 
-              const CategorySelector(sectionTitle: "Category"),
+              const CategorySelector(
+                sectionTitle: "Category",
+                screenType: CategoryScreenType.home,
+              ),
               const SizedBox(height: 25),
 
-              ProductsHorizontalList(
+              ProductsDirectionalList(
                 sectionTitle: "Popular Products",
                 height: 250,
                 products: filteredProducts,

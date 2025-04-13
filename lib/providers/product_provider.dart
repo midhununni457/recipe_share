@@ -16,7 +16,10 @@ class ProductProvider with ChangeNotifier {
     rc.Category(id: 'jewellery', name: "Jewellery"),
   ];
 
-  String _selectedCategoryId = 'mens';
+  String _homeSelectedCategoryId = 'mens';
+
+  String _searchSelectedCategoryId = 'mens';
+
   bool _showAllCategories = false;
   final List<Product> _favorites = [];
 
@@ -26,7 +29,10 @@ class ProductProvider with ChangeNotifier {
   List<rc.Category> get categories => _categories;
   List<rc.Category> get displayedCategories =>
       _showAllCategories ? _categories : _categories.take(3).toList();
-  String get selectedCategoryId => _selectedCategoryId;
+
+  String get homeSelectedCategoryId => _homeSelectedCategoryId;
+  String get searchSelectedCategoryId => _searchSelectedCategoryId;
+
   bool get showAllCategories => _showAllCategories;
   List<Product> get favorites => _favorites;
 
@@ -49,17 +55,27 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
-  void selectCategory(String categoryId) {
-    if (_selectedCategoryId != categoryId) {
-      _selectedCategoryId = categoryId;
+  void selectHomeCategory(String categoryId) {
+    if (_homeSelectedCategoryId != categoryId) {
+      _homeSelectedCategoryId = categoryId;
+      notifyListeners();
+    }
+  }
+
+  void selectSearchCategory(String categoryId) {
+    if (_searchSelectedCategoryId != categoryId) {
+      _searchSelectedCategoryId = categoryId;
       notifyListeners();
     }
   }
 
   void toggleShowAllCategories() {
     _showAllCategories = !_showAllCategories;
-    if (_selectedCategoryId == 'jewellery' && !_showAllCategories) {
-      _selectedCategoryId = 'mens';
+    if (_homeSelectedCategoryId == 'jewellery' && !_showAllCategories) {
+      _homeSelectedCategoryId = 'mens';
+    }
+    if (_searchSelectedCategoryId == 'jewellery' && !_showAllCategories) {
+      _searchSelectedCategoryId = 'mens';
     }
     notifyListeners();
   }
@@ -85,6 +101,15 @@ class ProductProvider with ChangeNotifier {
       default:
         return _products;
     }
+  }
+
+  // New methods to get products by screen-specific category
+  List<Product> getHomeProducts() {
+    return getProductsByCategory(_homeSelectedCategoryId);
+  }
+
+  List<Product> getSearchProducts() {
+    return getProductsByCategory(_searchSelectedCategoryId);
   }
 
   bool isFavorite(Product product) {

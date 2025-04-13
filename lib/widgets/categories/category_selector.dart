@@ -2,16 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_circle/providers/product_provider.dart';
 
+enum CategoryScreenType { home, search }
+
 class CategorySelector extends StatelessWidget {
   final String sectionTitle;
+  final CategoryScreenType screenType;
 
-  const CategorySelector({required this.sectionTitle, super.key});
+  const CategorySelector({
+    required this.sectionTitle,
+    this.screenType = CategoryScreenType.home,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
     final displayedCategories = productProvider.displayedCategories;
-    final selectedCategoryId = productProvider.selectedCategoryId;
+    final selectedCategoryId =
+        screenType == CategoryScreenType.home
+            ? productProvider.homeSelectedCategoryId
+            : productProvider.searchSelectedCategoryId;
     final showAllCategories = productProvider.showAllCategories;
 
     return Column(
@@ -61,7 +71,11 @@ class CategorySelector extends StatelessWidget {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    productProvider.selectCategory(category.id);
+                    if (screenType == CategoryScreenType.home) {
+                      productProvider.selectHomeCategory(category.id);
+                    } else {
+                      productProvider.selectSearchCategory(category.id);
+                    }
 
                     if (!productProvider.showAllCategories &&
                         index >= 3 &&
