@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:recipe_circle/models/product_model.dart';
+import 'package:recipe_circle/providers/product_provider.dart';
 
 class PopularCard extends StatelessWidget {
   final Product product;
@@ -8,6 +10,9 @@ class PopularCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productProvider = Provider.of<ProductProvider>(context);
+    final isFavorite = productProvider.isFavorite(product);
+
     return Container(
       width: 200,
       height: 250,
@@ -27,32 +32,60 @@ class PopularCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 168,
-            height: 128,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-            child: Image.network(
-              product.image,
-              fit: BoxFit.fitHeight,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: Colors.grey.shade300,
-                  child: const Icon(Icons.error),
-                );
-              },
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Center(
-                  child: CircularProgressIndicator(
-                    value:
-                        loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                            : null,
+          Stack(
+            children: [
+              Container(
+                width: 168,
+                height: 128,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Image.network(
+                  product.image,
+                  fit: BoxFit.fitHeight,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey.shade300,
+                      child: const Icon(Icons.error),
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value:
+                            loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Positioned(
+                top: 5,
+                right: 5,
+                child: GestureDetector(
+                  onTap: () {
+                    productProvider.toggleFavorite(product);
+                  },
+                  child: Container(
+                    width: 28,
+                    height: 28,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Image.asset(
+                      isFavorite
+                          ? 'assets/imgs/heart_filled.png'
+                          : 'assets/imgs/heart_unfilled.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 12),
           Text(

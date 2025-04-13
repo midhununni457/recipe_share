@@ -6,8 +6,8 @@ import 'package:recipe_circle/widgets/cards/popular_card.dart';
 import 'package:recipe_circle/widgets/categories/category_selector.dart';
 import 'package:recipe_circle/widgets/lists/products_horizontal_list.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class Home extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 3),
+                    const SizedBox(height: 5),
                     const Text(
                       'Midhun Unni',
                       style: TextStyle(
@@ -81,7 +81,7 @@ class Home extends StatelessWidget {
               ),
               const SizedBox(height: 25),
 
-              const CategorySelector(),
+              const CategorySelector(sectionTitle: "Category"),
               const SizedBox(height: 25),
 
               ProductsHorizontalList(

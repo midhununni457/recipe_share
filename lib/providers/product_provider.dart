@@ -18,6 +18,8 @@ class ProductProvider with ChangeNotifier {
 
   String _selectedCategoryId = 'mens';
   bool _showAllCategories = false;
+  final List<Product> _favorites = [];
+
   List<Product> get products => _products;
   bool get isLoading => _isLoading;
   String get error => _error;
@@ -26,6 +28,7 @@ class ProductProvider with ChangeNotifier {
       _showAllCategories ? _categories : _categories.take(3).toList();
   String get selectedCategoryId => _selectedCategoryId;
   bool get showAllCategories => _showAllCategories;
+  List<Product> get favorites => _favorites;
 
   ProductProvider() {
     fetchProducts();
@@ -82,5 +85,18 @@ class ProductProvider with ChangeNotifier {
       default:
         return _products;
     }
+  }
+
+  bool isFavorite(Product product) {
+    return _favorites.any((favProduct) => favProduct.id == product.id);
+  }
+
+  void toggleFavorite(Product product) {
+    if (isFavorite(product)) {
+      _favorites.removeWhere((favProduct) => favProduct.id == product.id);
+    } else {
+      _favorites.add(product);
+    }
+    notifyListeners();
   }
 }

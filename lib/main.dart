@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_circle/providers/product_provider.dart';
-import 'package:recipe_circle/screens/home.dart';
+import 'package:recipe_circle/screens/main_screen.dart';
 
 void main() {
   runApp(
@@ -28,7 +28,7 @@ void main() {
             labelSmall: TextStyle(color: Color(0xFF0a2533)),
           ),
         ),
-        home: const Home(),
+        home: const MainScreen(),
       ),
     ),
   );

@@ -33,7 +33,7 @@ class ProductsHorizontalList extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10, bottom: 10),
           child: Text(
             sectionTitle,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
         if (isLoading)

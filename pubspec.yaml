@@ -63,6 +63,16 @@ flutter:
     - assets/imgs/login_bg.png
     - assets/imgs/sun.png
     - assets/imgs/cart.png
+    - assets/imgs/heart_unfilled.png
+    - assets/imgs/heart_filled.png
+    - assets/imgs/notch_img.png
+    - assets/imgs/home_filled.png
+    - assets/imgs/home_unfilled.png
+    - assets/imgs/search_filled.png
+    - assets/imgs/search_unfilled.png
+    - assets/imgs/profile_filled.png
+    - assets/imgs/profile_unfilled.png
+    - assets/imgs/notifications.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
