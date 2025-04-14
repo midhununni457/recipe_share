@@ -79,6 +79,7 @@ flutter:
     - assets/imgs/property3.png
     - assets/imgs/property4.png
     - assets/imgs/settings.png
+    - assets/imgs/M.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

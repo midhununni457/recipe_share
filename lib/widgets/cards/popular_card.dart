@@ -5,8 +5,13 @@ import 'package:recipe_circle/providers/product_provider.dart';
 
 class PopularCard extends StatelessWidget {
   final Product product;
+  final bool showCategory;
 
-  const PopularCard({super.key, required this.product});
+  const PopularCard({
+    super.key,
+    required this.product,
+    this.showCategory = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -95,46 +100,58 @@ class PopularCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 6),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                "\$ ${product.price}",
-                style: const TextStyle(
-                  color: Color(0xFF97A2B0),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                ),
+          if (showCategory)
+            Text(
+              product.category,
+              style: const TextStyle(
+                color: Color(0xFF97A2B0),
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
               ),
-              Container(
-                width: 5,
-                height: 5,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF97A2B0),
-                  shape: BoxShape.circle,
-                ),
-              ),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.star,
-                    fill: 0.0,
-                    color: Color.fromARGB(255, 252, 228, 74),
-                    size: 14,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            )
+          else
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "\$ ${product.price}",
+                  style: const TextStyle(
+                    color: Color(0xFF97A2B0),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
                   ),
-                  const SizedBox(width: 5),
-                  Text(
-                    product.rating.rate.toString(),
-                    style: const TextStyle(
-                      color: Color(0xFF97A2B0),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
+                ),
+                Container(
+                  width: 5,
+                  height: 5,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF97A2B0),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.star,
+                      fill: 0.0,
+                      color: Color.fromARGB(255, 252, 228, 74),
+                      size: 14,
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                    const SizedBox(width: 5),
+                    Text(
+                      product.rating.rate.toString(),
+                      style: const TextStyle(
+                        color: Color(0xFF97A2B0),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
         ],
       ),
     );
