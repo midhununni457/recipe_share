@@ -103,7 +103,6 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
-  // New methods to get products by screen-specific category
   List<Product> getHomeProducts() {
     return getProductsByCategory(_homeSelectedCategoryId);
   }

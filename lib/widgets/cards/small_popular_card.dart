@@ -57,7 +57,7 @@ class SmallPopularCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             product.title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:recipe_circle/screens/main_screen.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -21,7 +22,12 @@ class Login extends StatelessWidget {
             top: 60,
             right: 20,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                );
+              },
               style: TextButton.styleFrom(backgroundColor: Colors.transparent),
               child: Text(
                 "Later",

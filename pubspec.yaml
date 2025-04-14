@@ -73,6 +73,12 @@ flutter:
     - assets/imgs/profile_filled.png
     - assets/imgs/profile_unfilled.png
     - assets/imgs/notifications.png
+    - assets/imgs/cross.png
+    - assets/imgs/property1.png
+    - assets/imgs/property2.png
+    - assets/imgs/property3.png
+    - assets/imgs/property4.png
+    - assets/imgs/settings.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_circle/models/product_model.dart';
 import 'package:recipe_circle/providers/product_provider.dart';
+import 'package:recipe_circle/screens/item.dart';
 import 'package:recipe_circle/widgets/cards/featured_card.dart';
 import 'package:recipe_circle/widgets/lists/directional_list_view.dart';
 
@@ -43,9 +44,22 @@ class ProductsDirectionalList extends StatelessWidget {
       titlePadding: const EdgeInsets.only(left: 10, bottom: 10),
       itemBuilder: (context, product) {
         final index = productsList.indexOf(product);
-        return itemBuilder != null
-            ? itemBuilder!(product, index)
-            : FeaturedCard(product: product);
+        Widget productWidget =
+            itemBuilder != null
+                ? itemBuilder!(product, index)
+                : FeaturedCard(product: product);
+
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ItemScreen(product: product),
+              ),
+            );
+          },
+          child: productWidget,
+        );
       },
     );
   }
